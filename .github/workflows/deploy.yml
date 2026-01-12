@@ -48,7 +48,7 @@ jobs:
           service_token_id: ${{ secrets.CF_CLIENT_ID }}
           service_token_secret: ${{ secrets.CF_CLIENT_SECRET }}
           private_key_filename: deploy_key
-          script: |
+          commands: |
             cd ~/myapp
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker compose pull
