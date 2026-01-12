@@ -8,13 +8,13 @@ RUN npm install
 
 # Copy the rest of the code and build for dev
 COPY . .
-RUN npm run build --configuration=dev
+RUN npm run build --configuration=development
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:stable-alpine
 # Copy the build output from the 'build' stage to Nginx's public folder
 # Note: Ensure the path 'dist/your-app-name/browser' matches your angular.json output path
-COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+COPY --from=build /app/dist/legion-frontend/browser /usr/share/nginx/html
 
 # Copy a custom nginx config if you need routing support (explained below)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
