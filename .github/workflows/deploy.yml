@@ -30,7 +30,7 @@ jobs:
       - name: Build and push Frontend Image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: .
           push: true
           tags: ghcr.io/guillaumelambermont/legion-frontend:latest
 
