@@ -1,0 +1,15 @@
+<div style="padding: 20px;">
+  <h1>Player List Debug</h1>
+
+  <pre>Raw Data Count: {{ players().length }}</pre>
+
+  @if (players().length > 0) {
+    <ul>
+      @for (p of players(); track p.id) {
+        <li>{{ p.id }} - {{ p.username }} ({{ p.email }})</li>
+      }
+    </ul>
+  } @else {
+    <p style="color: red;">The array is still empty according to the template.</p>
+  }
+</div>
