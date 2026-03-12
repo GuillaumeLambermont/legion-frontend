@@ -30,7 +30,7 @@ jobs:
       - name: Build and push Frontend Image
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: .
           push: true
           tags: ghcr.io/guillaumelambermont/legion-frontend:latest
 
@@ -40,7 +40,7 @@ jobs:
     environment: dev
     steps:
       - name: Deploy to VM via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: and-fm/cloudflared-ssh-action@v3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -48,7 +48,7 @@ jobs:
           service_token_id: ${{ secrets.CF_CLIENT_ID }}
           service_token_secret: ${{ secrets.CF_CLIENT_SECRET }}
           private_key_filename: deploy_key
-          script: |
+          commands: |
             cd ~/myapp
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker compose pull
