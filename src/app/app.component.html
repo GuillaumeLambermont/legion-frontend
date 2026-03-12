@@ -13,3 +13,55 @@
     <p style="color: red;">The array is still empty according to the template.</p>
   }
 </div>
+<div class="container">
+  <h2>Player Search</h2>
+  
+  <div class="search-box">
+    <input 
+      type="text" 
+      [(ngModel)]="searchId" 
+      placeholder="Enter Player ID..." 
+    />
+    <button (click)="onSearchPlayer()">Find Player</button>
+  </div>
+
+  <hr />
+
+  @if (singlePlayer(); as player) {
+    <div class="player-card">
+      <h3>Found: {{ player.username }}</h3>
+      <p>Email: {{ player.email }}</p>
+      <p>ID: {{ player.id }}</p>
+      </div>
+  }
+</div>
+
+<div class="container">
+  <h2>Create a new player</h2>
+  <!-- simple template-driven form -->
+  <form (ngSubmit)="createPlayer()" class="create-player-form">
+    <div>
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        [(ngModel)]="newPlayer().username"
+        name="username"
+        placeholder="Enter username"
+        required
+      />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="newPlayer().email"
+        name="email"
+        placeholder="Enter email"
+        required
+      />
+    </div>
+    <button type="submit">Create</button>
+  </form>
+</div>

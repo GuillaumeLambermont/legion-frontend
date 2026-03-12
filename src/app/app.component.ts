@@ -1,30 +1,73 @@
-import { Component, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core'; // Add ChangeDetectorRef
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // 1. Import FormsModule
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule], // 2. Add FormsModule here
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   private playerService = inject(PlayerService);
-  private cdr = inject(ChangeDetectorRef); // Inject the change detector
 
   players = signal<Player[]>([]);
+  singlePlayer = signal<Player | null>(null); // Signal for the searched player
+  searchId: string = ''; // Property to bind to the input field
+
+  // signal used for the "add new player" form.  start with empty strings;
+  // `id` is undefined until the server assigns one.
+  newPlayer = signal<Partial<Player>>({ username: '', email: '' });
 
   ngOnInit() {
-    console.log('App started, calling service...');
+    this.loadAllPlayers();
+  }
+
+  loadAllPlayers() {
     this.playerService.getPlayers().subscribe({
-      next: (data) => {
-        console.log('Pushing data to signal:', data);
-        this.players.set(data);
-        this.cdr.detectChanges(); // FORCE the UI to update immediately
+      next: (data) => this.players.set(data),
+      error: (err) => console.error('Fetch all failed:', err)
+    });
+  }
+
+  // 3. Method to fetch a player by ID
+  onSearchPlayer() {
+    if (!this.searchId) return;
+
+    this.playerService.getPlayer(this.searchId).subscribe({
+      next: (player) => {
+        this.singlePlayer.set(player);
       },
-      error: (err) => console.error('Service call failed:', err)
+      error: (err) => {
+        console.error('Player not found:', err);
+        this.singlePlayer.set(null);
+        alert('Player not found!');
+      }
+    });
+  }
+
+  /** called when the "add player" form is submitted */
+  createPlayer() {
+    const payload = this.newPlayer();
+    if (!payload.username || !payload.email) {
+      alert('Both username and email are required');
+      return;
+    }
+
+    this.playerService.addPlayer(payload).subscribe({
+      next: (created) => {
+        // update the list so user sees the new entry immediately
+        this.players.update(list => [...list, created]);
+        // clear the form
+        this.newPlayer.set({ username: '', email: '' });
+      },
+      error: (err) => {
+        console.error('Failed to add player', err);
+        alert('Could not create player');
+      }
     });
   }
 }
