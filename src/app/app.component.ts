@@ -1,30 +1,47 @@
-import { Component, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core'; // Add ChangeDetectorRef
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // 1. Import FormsModule
 import { PlayerService } from './player.service';
 import { Player } from './player.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule], // 2. Add FormsModule here
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   private playerService = inject(PlayerService);
-  private cdr = inject(ChangeDetectorRef); // Inject the change detector
 
   players = signal<Player[]>([]);
+  singlePlayer = signal<Player | null>(null); // Signal for the searched player
+  searchId: string = ''; // Property to bind to the input field
 
   ngOnInit() {
-    console.log('App started, calling service...');
+    this.loadAllPlayers();
+  }
+
+  loadAllPlayers() {
     this.playerService.getPlayers().subscribe({
-      next: (data) => {
-        console.log('Pushing data to signal:', data);
-        this.players.set(data);
-        this.cdr.detectChanges(); // FORCE the UI to update immediately
+      next: (data) => this.players.set(data),
+      error: (err) => console.error('Fetch all failed:', err)
+    });
+  }
+
+  // 3. Method to fetch a player by ID
+  onSearchPlayer() {
+    if (!this.searchId) return;
+
+    this.playerService.getPlayer(this.searchId).subscribe({
+      next: (player) => {
+        this.singlePlayer.set(player);
       },
-      error: (err) => console.error('Service call failed:', err)
+      error: (err) => {
+        console.error('Player not found:', err);
+        this.singlePlayer.set(null);
+        alert('Player not found!');
+      }
     });
   }
 }

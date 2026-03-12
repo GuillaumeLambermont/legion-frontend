@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://legion-api.corsac.be'
+  apiUrl: 'http://localhost:8080'
 };

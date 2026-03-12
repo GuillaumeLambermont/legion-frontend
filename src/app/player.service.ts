@@ -14,4 +14,20 @@ export class PlayerService {
   getPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(this.apiUrl);
   }
+
+  getPlayer(id: number | string): Observable<Player> {
+    return this.http.get<Player>(`${this.apiUrl}/${id}`);
+  }
+
+  addPlayer(player: Partial<Player>): Observable<Player> {
+    return this.http.post<Player>(this.apiUrl, player);
+  }
+
+  updatePlayer(id: number | string, player: Partial<Player>) {
+    return this.http.put<Player>(this.apiUrl, player);
+  }
+
+  deletePlayer(id: number | string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`)
+  }
 }
