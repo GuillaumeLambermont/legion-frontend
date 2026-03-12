@@ -36,18 +36,31 @@
 </div>
 
 <div class="container">
-  <h2> Create a new player :</h2>
-  <div class ="create-player-form">
-    <input
-    type="text"
-    [(ngModel)]="username"
-    placeholder="Enter username"
-    />
-    <input
-    type="email"
-    [(ngModel)]="email"
-    placeholder="Enter email"
-    />
-    
-  </div>
+  <h2>Create a new player</h2>
+  <!-- simple template-driven form -->
+  <form (ngSubmit)="createPlayer()" class="create-player-form">
+    <div>
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        [(ngModel)]="newPlayer().username"
+        name="username"
+        placeholder="Enter username"
+        required
+      />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="newPlayer().email"
+        name="email"
+        placeholder="Enter email"
+        required
+      />
+    </div>
+    <button type="submit">Create</button>
+  </form>
 </div>

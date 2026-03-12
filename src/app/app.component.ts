@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
   singlePlayer = signal<Player | null>(null); // Signal for the searched player
   searchId: string = ''; // Property to bind to the input field
 
+  // signal used for the "add new player" form.  start with empty strings;
+  // `id` is undefined until the server assigns one.
+  newPlayer = signal<Partial<Player>>({ username: '', email: '' });
+
   ngOnInit() {
     this.loadAllPlayers();
   }
@@ -41,6 +45,28 @@ export class AppComponent implements OnInit {
         console.error('Player not found:', err);
         this.singlePlayer.set(null);
         alert('Player not found!');
+      }
+    });
+  }
+
+  /** called when the "add player" form is submitted */
+  createPlayer() {
+    const payload = this.newPlayer();
+    if (!payload.username || !payload.email) {
+      alert('Both username and email are required');
+      return;
+    }
+
+    this.playerService.addPlayer(payload).subscribe({
+      next: (created) => {
+        // update the list so user sees the new entry immediately
+        this.players.update(list => [...list, created]);
+        // clear the form
+        this.newPlayer.set({ username: '', email: '' });
+      },
+      error: (err) => {
+        console.error('Failed to add player', err);
+        alert('Could not create player');
       }
     });
   }
