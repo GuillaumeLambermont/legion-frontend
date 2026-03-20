@@ -6,9 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the code and build for dev
+# Copy the rest of the code and build for production
 COPY . .
-RUN npm run build --configuration=development
+RUN npm run build --configuration=production
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:stable-alpine
