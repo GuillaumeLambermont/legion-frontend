@@ -1,0 +1,33 @@
+<div class="players-container">
+  <header class="page-header">
+    <h2>Player Roster</h2>
+    </header>
+
+  <div class="table-wrapper">
+    <table class="players-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email Address</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        @for (player of players(); track player.id) {
+          <tr>
+            <td class="id-column">{{ player.id }}</td>
+            <td><strong>{{ player.username }}</strong></td>
+            <td>{{ player.email }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="3" class="empty-state">
+              No players found. 
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
