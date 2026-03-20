@@ -13,6 +13,7 @@ import {
 } from 'keycloak-angular';
 
 import { routes } from './app.routes';
+import { environment } from '../environments/environment.dev';
 
 const urlCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:8080)(\/.*)?$/i,
@@ -23,9 +24,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideKeycloak({
       config: {
-        url: 'http://192.168.1.41:8080',
-        realm: 'legion-dev',
-        clientId: 'legion-frontend-dev'
+        url: environment.keycloakUrl,
+        realm: environment.keycloakRealm,
+        clientId: environment.keycloakClientId
       },
       initOptions: {
         onLoad: 'check-sso',
