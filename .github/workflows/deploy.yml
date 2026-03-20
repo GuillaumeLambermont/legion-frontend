@@ -37,7 +37,6 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-    environment: dev
     steps:
       - name: Deploy to VM via SSH
         uses: and-fm/cloudflared-ssh-action@v3
