@@ -73,7 +73,7 @@
               "buildTarget": "legion-frontend:build:development"
             }
           },
-          "defaultConfiguration": "development",
+          "defaultConfiguration": "production",
           "test": {
             "builder": "@angular/build:unit-test"
           }
