@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'https://legion-api.corsac.be',
   keycloakClientId: 'legion-frontend', // Will be replaced
   keycloakRealm: 'legion',           // Will be replaced
   keycloakUrl: 'https://auth.corsac.be'
