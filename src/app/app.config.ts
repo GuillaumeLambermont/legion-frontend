@@ -13,7 +13,7 @@ import {
 } from 'keycloak-angular';
 
 import { routes } from './app.routes';
-import { environment } from '../environments/environment.dev';
+import { environment } from '../environments/environment';
 
 const urlCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:8080)(\/.*)?$/i,
