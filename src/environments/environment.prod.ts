@@ -3,5 +3,5 @@ export const environment = {
   apiUrl: 'http://localhost:8080',
   keycloakClientId: 'legion-frontend', // Will be replaced
   keycloakRealm: 'legion',           // Will be replaced
-  keycloakUrl: 'https://auth.corsac.be'
+  keycloakUrl: 'http://192.168.1.41:8080'
 };
