@@ -3,5 +3,6 @@ export const environment = {
   apiUrl: 'https://legion-api.corsac.be',
   keycloakClientId: 'legion-frontend', // Will be replaced
   keycloakRealm: 'legion',           // Will be replaced
-  keycloakUrl: 'https://auth.corsac.be'
+  keycloakUrl: 'https://auth.corsac.be',
+  urlPattern: /^(https:\/\/legion-api.corsac.be)(\/.*)?$/i
 };
