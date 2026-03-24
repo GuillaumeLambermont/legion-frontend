@@ -21,6 +21,10 @@ export const routes: Routes = [
         path: 'players', 
         loadComponent: () => import('./pages/players/players').then(m => m.Players) 
       },
+      { 
+        path: 'artwork', 
+        loadComponent: () => import('./pages/artwork/artwork').then(m => m.Artwork) 
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]
   },

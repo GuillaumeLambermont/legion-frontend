@@ -61,7 +61,7 @@
               ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular/build:dev-server",
@@ -71,9 +71,12 @@
             },
             "development": {
               "buildTarget": "legion-frontend:build:development"
+            },
+            "default": {
+              "buildTarget": "legion-frontend:build"
             }
           },
-          "defaultConfiguration": "production",
+          "defaultConfiguration": "default",
           "test": {
             "builder": "@angular/build:unit-test"
           }

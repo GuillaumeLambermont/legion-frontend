@@ -9,9 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './home.css',
 })
 export class Home {
-  private router = inject(Router);
+  
 
-  goToPlayers() {
-    this.router.navigate(['/players']);
-  }
+  
 }
